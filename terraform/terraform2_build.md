@@ -1,10 +1,11 @@
-# Terraform
-- [Terraform](#terraform)
+# Terraform build in aws
+- [Terraform build in aws](#terraform-build-in-aws)
   - [Build infrastructure](#build-infrastructure)
     - [설정 파일 작성](#설정-파일-작성)
     - [Init](#init)
     - [Format and validate config](#format-and-validate-config)
     - [Create infra](#create-infra)
+    - [Inspect state](#inspect-state)
 
 ## Build infrastructure
 AWS 연결을 위해 아래와 같이 환경 세팅
@@ -95,4 +96,58 @@ Success! The configuration is valid.
 ```
 
 ### Create infra
-[link](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/aws-build)
+* code example
+```
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+    }
+  }
+  required_version = ">= 1.2.0"
+}
+
+provider "aws" {
+  region = "ap-northeast-2"
+  access_key = "MY_KEY"
+  secret_key = "MY_SECRET"
+}
+
+resource "aws_instance" "app_server" {
+  ami           = "ami-04ab8d3a67dfe6398"
+  instance_type = "t2.micro"
+
+  tags = {
+    Name     = "ExampleAppServerInstance"
+    Schedule = "off-at-20"
+  }
+}
+```
+``` 
+$ terraform apply
+
+Enter a value: (yes)
+```
+$\to$ EC2 생성됨
+
+* 인스턴스 중지(위의 *.tf 파일에 추가)
+```
+resource "aws_ec2_instance_state" "app_server" {
+  instance_id = aws_instance.app_server.id
+  state = "stopped"
+}
+```
+$\to$ 인스턴스 중지
+
+### Inspect state
+apply 이후 Terraform 은 `terraform.tfstate` 에 data 저장
+
+리소스의 ID와 특성들을 저장하고 업데이트, 제거 등을 수행
+
+테라폼이 리소스를 관리할 수 있는 유일한 방법이 terraform state file이므로 유의해서 관리해야 함
+
+```bash
+$ terraform state list
+aws_instance.app_server
+```
+$\to$ 현재 프로젝트의 리소스 리스트 확인 가능
