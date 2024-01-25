@@ -5,7 +5,7 @@ variable "AWS_SECRET_KEY" {
 }
 
 variable "AWS_REGION" {
-  default = "eu-west-1"
+  default = "ap-northeast-2"
 }
 
 variable "AMIS" {
@@ -14,6 +14,7 @@ variable "AMIS" {
     us-east-1 = "ami-13be557e"
     us-west-2 = "ami-06b94666"
     eu-west-1 = "ami-844e0bf7"
+    ap-northeast-2 = "ami-0bc4327f3aabf5b71"
   }
 }
 
@@ -26,6 +27,6 @@ variable "PATH_TO_PUBLIC_KEY" {
 }
 
 variable "INSTANCE_USERNAME" {
-  default = "ubuntu"
+  default = "ec2-user"
 }
 
