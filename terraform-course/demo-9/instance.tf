@@ -2,6 +2,10 @@ resource "aws_instance" "example" {
   ami           = var.AMIS[var.AWS_REGION]
   instance_type = "t2.micro"
 
+  tags = {
+    Schedule = "off-at-20"
+  }
+
   # the VPC subnet
   subnet_id = aws_subnet.main-public-1.id
 
@@ -13,7 +17,7 @@ resource "aws_instance" "example" {
 }
 
 resource "aws_ebs_volume" "ebs-volume-1" {
-  availability_zone = "eu-west-1a"
+  availability_zone = "${var.AWS_REGION}a"
   size              = 20
   type              = "gp2"
   tags = {
