@@ -1,7 +1,9 @@
 resource "aws_instance" "example" {
   ami           = var.AMIS[var.AWS_REGION]
   instance_type = "t2.micro"
-
+  tags = {
+    Schedule = "off-at-20"
+  }
   # the VPC subnet
   subnet_id = aws_subnet.main-public-1.id
 
@@ -16,7 +18,7 @@ resource "aws_instance" "example" {
 }
 
 resource "aws_ebs_volume" "ebs-volume-1" {
-  availability_zone = "eu-west-1a"
+  availability_zone = "${var.AWS_REGION}a"
   size              = 20
   type              = "gp2"
   tags = {
@@ -25,9 +27,8 @@ resource "aws_ebs_volume" "ebs-volume-1" {
 }
 
 resource "aws_volume_attachment" "ebs-volume-1-attachment" {
-  device_name  = var.INSTANCE_DEVICE_NAME
+  device_name  = var.INSTANCE_DEVICE_NAME        # "/dev/xvdh"
   volume_id    = aws_ebs_volume.ebs-volume-1.id
   instance_id  = aws_instance.example.id
   skip_destroy = true                            # skip destroy to avoid issues with terraform destroy
 }
-
