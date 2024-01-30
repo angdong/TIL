@@ -14,7 +14,7 @@ resource "aws_autoscaling_group" "example-autoscaling" {
   max_size                  = 2
   health_check_grace_period = 300
   health_check_type         = "EC2"
-  force_delete              = true
+  force_delete              = true # 오토스케일링 그룹에서 빠지면 자동으로 삭제
 
   tag {
     key                 = "Name"
