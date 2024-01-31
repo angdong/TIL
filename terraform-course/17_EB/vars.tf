@@ -1,5 +1,5 @@
 variable "AWS_REGION" {
-  default = "eu-west-1"
+  default = "ap-northeast-2"
 }
 
 variable "PATH_TO_PRIVATE_KEY" {
@@ -11,5 +11,6 @@ variable "PATH_TO_PUBLIC_KEY" {
 }
 
 variable "RDS_PASSWORD" {
+  default = "rdsmypasswor1"
 }
 
