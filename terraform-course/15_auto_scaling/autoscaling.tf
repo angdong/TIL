@@ -21,5 +21,10 @@ resource "aws_autoscaling_group" "example-autoscaling" {
     value               = "ec2 instance"
     propagate_at_launch = true
   }
+  tag {
+    key                 = "Schedule"
+    value               = "off-at-20"
+    propagate_at_launch = true
+  }
 }
 
