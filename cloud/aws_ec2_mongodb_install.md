@@ -10,4 +10,9 @@ tar xvfz mongosh-2.1.3-linux-arm64.tgz
 rm  mongosh-2.1.3-linux-arm64.tgz
 ```
 
-수정해야함.......ㅠㅠ
+혹은
+
+```
+sudo yum install mongodb-mongosh-shared-openssl3
+sudo yum install mongodb-mongosh
+```
