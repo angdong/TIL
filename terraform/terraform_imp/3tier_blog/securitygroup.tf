@@ -70,9 +70,9 @@ resource "aws_security_group" "tf-sg-pri-was" {
 
   # Http any open
   ingress {
-    from_port       = 8080
-    to_port         = 8080
-    protocol        = "tcp"
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -103,10 +103,10 @@ resource "aws_security_group" "tf-sg-pri-db" {
 
   # Http any open
   ingress {
-    from_port = 3306
-    to_port   = 3306
+    from_port = 27017
+    to_port   = 27017
     protocol  = "tcp"
-    # Master-Slave 위해 3306 port any open
+    # mongodb PSS 위해 27017 오픈
     cidr_blocks = ["0.0.0.0/0"]
   }
 

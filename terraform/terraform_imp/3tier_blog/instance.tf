@@ -74,6 +74,21 @@ resource "aws_instance" "tf-ec2-pri-c-db2" {
   }
 }
 
+resource "aws_instance" "tf-ec2-pri-c-db3" {
+  ami           = "ami-0bc4327f3aabf5b71"
+  instance_type = "t2.micro"
+  subnet_id     = aws_subnet.tf-sub-pri-c-db.id
+  key_name      = aws_key_pair.tf-key.key_name
+  vpc_security_group_ids = [
+    aws_security_group.tf-sg-pri-db.id
+  ]
+
+  tags = {
+    Name     = "tf-ec2-pri-c-db3"
+    Schedule = "off-at-22"
+  }
+}
+
 # WAS EC2
 resource "aws_instance" "tf-ec2-pri-a-was1" {
   ami           = "ami-0bc4327f3aabf5b71"
@@ -89,11 +104,11 @@ resource "aws_instance" "tf-ec2-pri-a-was1" {
     Schedule = "off-at-22"
   }
 
-#   # EBS 추가 구성(tomcat 설치를 EBS에서 compile로 진행하기 위함)
-#   ebs_block_device {
-#     device_name = "/dev/sdb"
-#     volume_size = "8"
-#   }
+  #   # EBS 추가 구성(tomcat 설치를 EBS에서 compile로 진행하기 위함)
+  #   ebs_block_device {
+  #     device_name = "/dev/sdb"
+  #     volume_size = "8"
+  #   }
 }
 
 resource "aws_instance" "tf-ec2-pri-c-was2" {
@@ -111,8 +126,8 @@ resource "aws_instance" "tf-ec2-pri-c-was2" {
   }
 
   # EBS 추가 구성(tomcat 설치를 EBS에서 compile로 진행하기 위함)
-#   ebs_block_device {
-#     device_name = "/dev/sdb"
-#     volume_size = "8"
-#   }
+  #   ebs_block_device {
+  #     device_name = "/dev/sdb"
+  #     volume_size = "8"
+  #   }
 }
